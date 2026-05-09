@@ -45,3 +45,49 @@ Pure client-side React 19 SPA — no backend, no routing library, no state manag
 ## Styling
 
 Tailwind CSS v4 via `@tailwindcss/vite` plugin (no `tailwind.config.js` — config is inline). Animations use `motion/react` (Framer Motion v12). Icons from `lucide-react`.
+
+## Rules
+
+### R-SEC: Seguridad de credenciales
+- NUNCA escribas `GEMINI_API_KEY` en ningún archivo dentro de `frontend/`.
+- NUNCA uses el prefijo `VITE_` para secrets que llamen a servicios externos.
+- Si necesitas una variable de entorno en el cliente, documenta por qué es segura de exponer. Si no puedes justificarlo, muévela al backend.
+- Antes de cada commit verifica: `grep -r "GEMINI_API_KEY" frontend/` debe retornar vacío.
+
+### R-API: Contrato de los endpoints /api/*
+- Las respuestas de error siempre son `{ error: string }` en español claro.
+- Nunca incluyas stack traces ni variables de proceso en respuestas al cliente.
+- Códigos HTTP: 400 = input inválido, 500 = fallo del servidor, 200 = éxito.
+- Endpoints actuales: `POST /api/extract-criteria`, `POST /api/evaluate-candidates`, `POST /api/generate-summary`, `GET /api/health`.
+
+### R-GEMINI: Llamadas al modelo
+- Siempre usa `responseMimeType: "application/json"` + `responseSchema` explícito.
+- Siempre envuelve las llamadas con `withRetry()` (máx 3 intentos, backoff 800 ms).
+- Siempre valida el JSON parseado con los validators de `backend/src/validators/`.
+- El modelo se configura con la variable `GEMINI_MODEL` en `backend/.env` (default: `gemini-2.0-flash-lite`). No uses `gemini-3-flash-preview` (nombre deprecado).
+
+### R-TYPES: Tipado TypeScript
+- Prohibido `any` implícito o explícito — usa `unknown` y type guards.
+- Toda función pública debe tener tipos explícitos en parámetros y retorno.
+- Los tipos compartidos entre frontend y backend van en `frontend/src/types.ts` hasta que exista `shared/types.ts`. Nunca dupliques interfaces.
+
+### R-STATE: Gestión de estado React
+- El estado de evaluación va en custom hooks (`useEvaluation`, `useCriteria`, `useCandidates`) — nunca directamente en `App.tsx` una vez extraído.
+- Los componentes de paso (`JDStep`, `CriteriaStep`, etc.) son funciones puras: reciben props, no leen estado global.
+- Prohibido `alert()` y `console.log` en componentes UI. Usa `ErrorBanner` y `console.error` en servicios.
+
+### R-GIT: Workflow de commits
+- Formato: `type(scope): descripción` en inglés.
+  Tipos: `feat`, `fix`, `refactor`, `chore`, `docs`, `test`.
+  Scopes: `frontend`, `backend`, `shared`, `docs`, `ci`.
+  Ejemplo: `fix(backend): handle empty cvs array with 400 response`
+- No hagas commits con `npm run lint` fallando.
+- No hagas commits con `GEMINI_API_KEY` real en ningún archivo tracked.
+
+## Glossary
+- **JD**: Job Description — texto libre con el perfil del cargo a evaluar.
+- **Criterion**: criterio de evaluación con peso (0–100) que debe sumar 100%.
+- **CandidateRanking**: resultado de evaluar un CV contra los `Criterion[]`.
+- **ExecutiveSummary**: síntesis top-3 generada tras evaluar todos los CVs.
+- **near-tie**: dos candidatos con diferencia de score ≤ 0.5 (requiere revisión humana).
+- **withRetry**: utilidad de reintentos con exponential backoff para llamadas Gemini.
