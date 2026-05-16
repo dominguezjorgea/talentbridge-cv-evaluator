@@ -34,3 +34,7 @@ Thumbs.db
 
 # Claude Code local settings (machine-specific)
 .claude/settings.local.json
+
+# BMAD / AI-assisted development framework skills (auto-installed, not project-specific)
+.claude/skills/
+_bmad/
