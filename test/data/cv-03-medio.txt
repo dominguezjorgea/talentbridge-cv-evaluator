@@ -1,0 +1,47 @@
+ANA TORRES SALCEDO
+Desarrolladora Frontend | React
+ana.torres.dev@outlook.com | +56 9 8765 4321
+Santiago, Chile
+
+SOBRE MÍ
+Desarrolladora frontend con 3 años de experiencia especializada en React. Tengo conocimientos
+básicos de machine learning adquiridos en cursos online y un diplomado. Me interesa mucho el
+área de IA pero aún no tengo experiencia profesional integrando LLMs en producción. Busco
+mi primer rol en una empresa de tecnología más grande donde pueda crecer.
+
+EXPERIENCIA
+
+Agencia Digital Pixel | Frontend Developer                        Mar 2022 – Actualidad
+Santiago, Chile
+- Desarrollé interfaces en React para 8 clientes del sector retail y educación
+- Integré APIs REST de terceros (pasarelas de pago, CMSs, analytics)
+- Colaboré con diseñadores UX para implementar Figma designs en código
+- Usé Git y GitHub para control de versiones en equipo de 3 personas
+- Trabajo presencial en Santiago, sin experiencia de trabajo remoto extendido
+
+Trainee | Startup EdTech (nombre confidencial)                    Sep 2021 – Feb 2022
+Santiago, Chile
+- Apoyo en desarrollo frontend con React y CSS
+- Tareas menores de QA manual y documentación
+
+EDUCACIÓN
+Ingeniería en Informática | Universidad Diego Portales             2017 – 2021
+Diplomado en Inteligencia Artificial Aplicada | Pontificia Universidad Católica  2022
+
+CURSOS RELEVANTES
+- Machine Learning con Python (Coursera, Andrew Ng) — 2022
+- React Avanzado con Hooks y Context (Udemy) — 2021
+- Introducción a LLMs (fast.ai) — 2023 (en curso)
+
+HABILIDADES
+Lenguajes: JavaScript (avanzado), Python (básico — solo scripts y notebooks)
+Frontend: React, CSS/SASS, HTML5, Figma to code
+Backend: REST API consumption, muy básico en Node.js (tutoriales únicamente)
+IA/ML: Scikit-learn (notebooks educativos), nociones de NLP, sin experiencia con LLMs en producción
+Herramientas: Git, VS Code, Jira (usuario), Figma
+
+LIMITACIONES RECONOCIDAS
+- Sin experiencia backend significativa
+- Python solo a nivel académico, no profesional
+- No he liderado proyectos ni personas
+- Trabajo remoto: experiencia limitada (2 meses durante pandemia)

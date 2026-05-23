@@ -1,0 +1,37 @@
+PEDRO GÓMEZ RÍOS
+Desarrollador Web
+pedrogomezrios@hotmail.com | +54 11 4567 8901
+Buenos Aires, Argentina
+
+EXPERIENCIA LABORAL
+
+Agencia Web Soluciones Digital | Desarrollador Web               Mar 2023 – Actualidad
+Buenos Aires, Argentina (presencial)
+- Desarrollo y mantenimiento de sitios web con PHP y WordPress
+- Implementación de themes y plugins en WordPress para clientes locales
+- Uso de jQuery para interactividad en páginas estáticas
+- Gestión de hosting cPanel y dominios para 15 clientes de PYME
+
+Freelance                                                          Jun 2022 – Feb 2023
+Buenos Aires, Argentina
+- Sitios web informativos con HTML, CSS y PHP básico
+- Integración de formularios de contacto con PHPMailer
+
+EDUCACIÓN
+Técnico en Programación | Instituto Superior ORT Argentina        2020 – 2022
+(Carrera de 2 años, no universitaria)
+
+HABILIDADES
+Lenguajes: PHP (básico-intermedio), HTML/CSS, JavaScript/jQuery básico
+CMS: WordPress (avanzado), Joomla (básico)
+Bases de datos: MySQL (consultas básicas SELECT, INSERT)
+Sin experiencia en: React, TypeScript, Python, APIs de IA, Node.js, Docker
+
+SOBRE MÍ
+Soy una persona responsable y puntual. Me gusta aprender cosas nuevas aunque aún
+no he tenido exposición a tecnologías modernas como React o inteligencia artificial.
+Trabajé siempre de manera presencial y me costaría adaptarme al trabajo 100% remoto
+sin supervisión. Busco estabilidad laboral en una empresa que me ayude a crecer.
+
+REFERENCIAS
+Disponibles a solicitud.

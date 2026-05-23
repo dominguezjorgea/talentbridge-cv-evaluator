@@ -1,0 +1,47 @@
+CARLOS RIVERA MENDOZA
+Desarrollador Full Stack | 5 años de experiencia
+carlos.rivera@gmail.com | +52 55 9876 5432
+Ciudad de México, México (remoto preferido)
+
+PERFIL
+Desarrollador full stack con sólida experiencia en React y Node.js. He explorado el ecosistema
+de IA generativa a través de proyectos personales y una startup en etapa temprana. Busco un
+rol donde pueda crecer en el área de aplicaciones con LLMs en un entorno profesional.
+
+EXPERIENCIA
+
+Konfío | Software Engineer                                        Ago 2021 – Actualidad
+Ciudad de México
+- Desarrollé y mantuve el portal de clientes en React + TypeScript, atendiendo a 80.000 PyMEs
+- Construí endpoints REST en Node.js/Express para el módulo de solicitudes de crédito
+- Integré Twilio y SendGrid para notificaciones automatizadas
+- Participé en code reviews y adopté prácticas de TDD con Jest
+- Colaboré con equipo de producto en sprints de 2 semanas (Scrum)
+
+RecruitAI (startup propia, proyecto personal)                     Ene 2023 – Jul 2023
+- Construí un prototipo de evaluador de CVs usando la API de OpenAI (GPT-4)
+- Implementé un sistema de prompts para extraer criterios de evaluación de ofertas de trabajo
+- El proyecto alcanzó 200 usuarios beta antes de pausarlo por falta de tiempo
+- Stack: React, Node.js, OpenAI API, SQLite
+
+Freelance | Web Developer                                         Jun 2019 – Jul 2021
+Ciudad de México
+- Desarrollé sitios web y e-commerce para 20+ clientes locales
+- Stack: React, PHP/Laravel, MySQL
+
+EDUCACIÓN
+Ingeniería en Computación | UNAM                                  2015 – 2019
+Titulado con mención honorífica
+
+HABILIDADES
+Lenguajes: JavaScript/TypeScript (avanzado), Python (básico-intermedio)
+Frontend: React, Redux, TailwindCSS, Webpack
+Backend: Node.js, Express, REST APIs, SQL (PostgreSQL, MySQL)
+IA/ML: OpenAI API (proyectos personales), prompts básicos, Langchain (explorando)
+Herramientas: Git, Docker (básico), AWS (S3, EC2), Jira, Slack
+
+FORTALEZAS
+- Comunicación clara y asertiva con equipos y stakeholders
+- Trabajo colaborativo, buen compañero de equipo
+- Aprendizaje rápido de nuevas tecnologías
+- Sin experiencia formal liderando equipos

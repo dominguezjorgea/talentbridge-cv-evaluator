@@ -1,0 +1,43 @@
+Ingeniero de Software Senior — Desarrollo de Aplicaciones con IA
+TechCorp Latam | Remoto | Tiempo completo
+
+Sobre el rol:
+Buscamos un Ingeniero de Software Senior con experiencia comprobada en el desarrollo de
+aplicaciones que integren modelos de lenguaje (LLMs) en entornos de producción. Trabajarás
+en un equipo distribuido en Latinoamérica, liderando técnicamente iniciativas de IA aplicada
+que impactan directamente a clientes enterprise.
+
+Responsabilidades:
+- Diseñar, implementar y mantener servicios de backend que consuman APIs de IA (Gemini, OpenAI, Anthropic)
+- Construir interfaces de usuario reactivas en React con integración fluida a APIs REST
+- Definir arquitecturas de prompts, pipelines de procesamiento y validación de outputs de LLMs
+- Colaborar con equipos de producto para traducir requerimientos de negocio en soluciones técnicas
+- Revisar código de pares, establecer estándares de calidad y mentorizar a ingenieros junior
+- Participar activamente en planificación de sprints, refinamiento de backlog y ceremonias ágiles
+- Documentar decisiones técnicas y mantener actualizada la wiki del equipo
+
+Requisitos técnicos:
+- 5+ años de experiencia en desarrollo de software profesional
+- Dominio de TypeScript o Python (ambos es un plus) para desarrollo backend y scripts de automatización
+- Experiencia integrando y consumiendo APIs de LLMs (OpenAI, Gemini, Anthropic, Cohere, etc.) en aplicaciones reales
+- Manejo sólido de React (hooks, context, estado asíncrono) para desarrollo frontend
+- Diseño e implementación de APIs REST: autenticación, manejo de errores, versionado
+- Experiencia trabajando de forma autónoma en equipos remotos distribuidos
+
+Requisitos blandos:
+- Comunicación escrita y verbal clara en español e inglés técnico
+- Capacidad para trabajar con autonomía y proactividad sin supervisión constante
+- Mentalidad de resolución de problemas: identificar raíz de problemas, proponer soluciones pragmáticas
+- Orientación a resultados: entregar funcionalidades completas, no solo código
+
+Nice-to-have:
+- Experiencia previa con Google Gemini, Claude (Anthropic) o modelos fine-tuned
+- Conocimiento de Docker y orquestación con Docker Compose
+- Experiencia con pipelines CI/CD (GitHub Actions, GitLab CI)
+- Contribuciones a proyectos open source
+
+Ofrecemos:
+- Salario competitivo en USD según experiencia
+- Trabajo 100% remoto con horario flexible (overlap de 4h con zona horaria EST)
+- Presupuesto de desarrollo profesional (cursos, conferencias, libros)
+- Equipo pequeño, alta autonomía, impacto directo en el producto

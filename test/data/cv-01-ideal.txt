@@ -1,0 +1,55 @@
+LAURA MARTÍNEZ VEGA
+Ingeniera de Software Senior | IA Aplicada & Full Stack
+laura.martinez@email.com | +57 300 123 4567 | LinkedIn: linkedin.com/in/lauramvega
+Bogotá, Colombia (disponible para trabajo remoto)
+
+RESUMEN PROFESIONAL
+Ingeniera de software con 8 años de experiencia construyendo sistemas de producción que integran
+modelos de lenguaje de última generación. Lideré el área de IA aplicada en dos startups de la
+región y actualmente dirijo un equipo de 4 ingenieros en el desarrollo de productos de análisis
+de texto con LLMs. Contribuidora activa a proyectos open source relacionados con prompt engineering.
+
+EXPERIENCIA LABORAL
+
+Runa HR Tech | Senior AI Engineer (Lead)                          Mar 2022 – Actualidad
+Bogotá, Colombia / Remoto
+- Diseñé e implementé desde cero el pipeline de evaluación de candidatos con Gemini 1.5 Pro,
+  procesando +50.000 CVs/mes con 94% de consistencia vs evaluación humana
+- Migré el servicio de OpenAI GPT-3.5 a Gemini 2.0 Flash reduciendo costos un 67% sin degradación
+  de calidad medida con dataset de evaluación propio
+- Construí el frontend en React 18 + TypeScript del módulo de triage, usado por 200+ recruiters
+- Mentorié a 3 ingenieros junior en prácticas de prompting estructurado y validación de outputs con JSON Schema
+- Establecí estándares de código, proceso de code review y pipeline CI/CD con GitHub Actions
+
+Rappi | Software Engineer                                         Jun 2019 – Feb 2022
+Bogotá, Colombia
+- Desarrollé microservicios en Python (FastAPI) y TypeScript (Express) para el módulo de
+  recomendaciones del marketplace, sirviendo 2M de peticiones diarias
+- Integré la API de OpenAI para generación de descripciones de productos en 8 idiomas,
+  reduciendo el tiempo de onboarding de restaurantes en un 40%
+- Colaboré con equipo distribuido (Colombia, México, Brasil, Argentina) usando metodologías ágiles
+
+Freelance | Full Stack Developer                                   Ene 2017 – May 2019
+- Desarrollé 12 aplicaciones web para clientes en Colombia, Chile y México
+- Stack principal: React, Node.js, PostgreSQL, AWS
+
+EDUCACIÓN
+Ingeniería de Sistemas | Universidad de los Andes, Bogotá         2012 – 2017
+Grado con honores — GPA 4.5/5.0
+
+CERTIFICACIONES Y CURSOS
+- Google Cloud Professional Data Engineer (2023)
+- DeepLearning.AI — LangChain for LLM Application Development (2023)
+- Anthropic Claude API Expert Certification (2024)
+
+HABILIDADES TÉCNICAS
+Lenguajes: TypeScript (experta), Python (experta), Go (intermedio)
+Frontend: React, Next.js, Tailwind CSS, Vite
+Backend: Node.js, FastAPI, Express, PostgreSQL, Redis
+IA/ML: Gemini API, OpenAI API, Anthropic API, LangChain, prompt engineering, RAG
+DevOps: Docker, GitHub Actions, Google Cloud Run, Terraform
+Idiomas: Español (nativo), Inglés (C1 — IELTS 7.5)
+
+PROYECTOS DESTACADOS
+- PromptLab (open source): Librería Python para testing de prompts con múltiples LLMs — 1.2k ⭐ en GitHub
+- CVScout: Herramienta de evaluación de candidatos con IA, presentada en PyCon Latam 2023
