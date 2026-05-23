@@ -38,3 +38,6 @@ Thumbs.db
 # BMAD / AI-assisted development framework skills (auto-installed, not project-specific)
 .claude/skills/
 _bmad/
+
+# Playwright MCP temporary snapshots (generated during MCP browser sessions)
+.playwright-mcp/
