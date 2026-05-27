@@ -5,18 +5,19 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ClipboardList, 
-  Users, 
-  Target, 
-  FileText, 
-  ChevronRight, 
-  AlertCircle, 
-  TrendingUp, 
-  CheckCircle2, 
+import {
+  ClipboardList,
+  Users,
+  Target,
+  FileText,
+  ChevronRight,
+  AlertCircle,
+  TrendingUp,
+  CheckCircle2,
   Search,
   Star,
-  Info
+  Info,
+  Download
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { 
@@ -93,6 +94,27 @@ export default function App() {
 
   const handleCriteriaConfirm = () => {
     setStep('CVS');
+  };
+
+  const handleExportCsv = async () => {
+    try {
+      const response = await fetch('/api/export-csv', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ rankings, jobDescription: jd }),
+      });
+      if (!response.ok) throw new Error('Error en el servidor');
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `shortlist_talentbridge_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('[export-csv]', error);
+      alert('Error al exportar CSV. Intenta de nuevo.');
+    }
   };
 
   const handleCvSubmit = async () => {
@@ -443,17 +465,27 @@ export default function App() {
                     <p className="text-[11px] text-slate-500 font-medium italic">Triage técnico consistente ahorrando ~28h de fatiga diagnóstica.</p>
                    </div>
                 </div>
-                <button 
-                  onClick={() => {
-                    setStep('JD');
-                    setRankings([]);
-                    setExecutiveSummary(null);
-                    setCriteria([]);
-                  }} 
-                  className="px-10 py-4 bg-white border border-slate-200 rounded-xl text-[10px] font-black text-slate-700 hover:bg-slate-50 hover:border-indigo-600 hover:text-indigo-600 active:scale-[0.98] transition-all uppercase tracking-[0.2em] shadow-sm"
-                >
-                  Nueva Evaluación de Puesto
-                </button>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  {/* Módulo 4 — CSV Export (gap #1 de Especificaciones M3) */}
+                  <button
+                    onClick={handleExportCsv}
+                    className="px-10 py-4 bg-indigo-600 text-white border border-indigo-600 rounded-xl text-[10px] font-black hover:bg-indigo-700 active:scale-[0.98] transition-all uppercase tracking-[0.2em] shadow-sm flex items-center gap-2 justify-center"
+                  >
+                    <Download className="w-4 h-4" />
+                    Exportar CSV
+                  </button>
+                  <button
+                    onClick={() => {
+                      setStep('JD');
+                      setRankings([]);
+                      setExecutiveSummary(null);
+                      setCriteria([]);
+                    }}
+                    className="px-10 py-4 bg-white border border-slate-200 rounded-xl text-[10px] font-black text-slate-700 hover:bg-slate-50 hover:border-indigo-600 hover:text-indigo-600 active:scale-[0.98] transition-all uppercase tracking-[0.2em] shadow-sm"
+                  >
+                    Nueva Evaluación de Puesto
+                  </button>
+                </div>
               </div>
             </motion.div>
           )}

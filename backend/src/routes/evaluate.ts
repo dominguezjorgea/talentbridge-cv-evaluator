@@ -209,4 +209,69 @@ ${criteria.sort((a, b) => b.weight - a.weight).slice(0, 3).map(c => c.name).join
   }
 });
 
+// POST /api/export-csv
+// Módulo 4 — gap #1 identificado en Especificaciones M3
+router.post('/export-csv', (req: Request, res: Response) => {
+  try {
+    const { rankings, jobDescription } = req.body as {
+      rankings: CandidateRanking[];
+      jobDescription?: string;
+    };
+
+    if (!rankings || !Array.isArray(rankings) || rankings.length === 0) {
+      res.status(400).json({ error: 'Se requiere un array de rankings válido.' });
+      return;
+    }
+
+    const headers = [
+      'Ranking',
+      'Nombre',
+      'Score (0-10)',
+      'Recomendación',
+      'Evidencia Citada',
+      'Fortalezas',
+      'Gaps',
+      'Red Flags',
+    ];
+
+    const escape = (val: unknown) =>
+      `"${String(val ?? '').replace(/"/g, '""')}"`;
+
+    const sortedRankings = [...rankings].sort((a, b) => b.score - a.score);
+
+    const rows = sortedRankings.map((c, i) => [
+      i + 1,
+      c.name,
+      c.score,
+      c.recommendation,
+      (c.evidence ?? []).join(' | '),
+      (c.strengths ?? []).join(' | '),
+      (c.gaps ?? []).join(' | '),
+      (c.red_flags ?? []).join(' | '),
+    ]);
+
+    const csvLines = [headers, ...rows].map(row => row.map(escape).join(','));
+
+    // Add metadata header
+    const today = new Date().toISOString().slice(0, 10);
+    const meta = [
+      `# TalentBridge Recruiter AI Assistant — Shortlist Export`,
+      `# Fecha: ${today}`,
+      `# Candidatos evaluados: ${rankings.length}`,
+      `# Generado por: TalentBridge Evaluador Técnico v1.0`,
+      '',
+    ];
+
+    const csv = [...meta, ...csvLines].join('\n');
+    const filename = `shortlist_talentbridge_${today}.csv`;
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+    res.send('﻿' + csv); // BOM for Excel compatibility
+  } catch (error) {
+    console.error('[export-csv Error]', error);
+    res.status(500).json({ error: 'Error al generar CSV. Intenta de nuevo.' });
+  }
+});
+
 export default router;
