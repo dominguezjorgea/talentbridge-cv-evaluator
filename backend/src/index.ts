@@ -6,7 +6,7 @@ import evaluateRouter from './routes/evaluate.js';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-app.use(cors({ origin: process.env.CORS_ORIGIN || 'http://localhost:5173' }));
+app.use(cors({ origin: process.env.CORS_ORIGIN || /^http:\/\/localhost:\d+$/ }));
 app.use(express.json({ limit: '5mb' }));
 
 app.get('/api/health', (_req, res) => {

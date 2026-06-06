@@ -3,20 +3,23 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  ClipboardList, 
-  Users, 
-  Target, 
-  FileText, 
-  ChevronRight, 
-  AlertCircle, 
-  TrendingUp, 
-  CheckCircle2, 
+import {
+  ClipboardList,
+  Users,
+  Target,
+  FileText,
+  ChevronRight,
+  AlertCircle,
+  TrendingUp,
+  CheckCircle2,
   Search,
   Star,
-  Info
+  Info,
+  Upload,
+  FilePlus2,
+  X
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { 
@@ -25,11 +28,12 @@ import {
   CandidateRanking, 
   ExecutiveSummary 
 } from './types';
-import { 
-  extractCriteria, 
-  evaluateCandidate, 
-  generateExecutiveSummary 
+import {
+  extractCriteria,
+  evaluateCandidate,
+  generateExecutiveSummary
 } from './services/apiService';
+import { CandidateDashboard } from './components/dashboard/CandidateDashboard';
 
 export default function App() {
   type ServerStatus = 'checking' | 'ok' | 'error';
@@ -124,6 +128,46 @@ export default function App() {
     const newCriteria = [...criteria];
     newCriteria[index].weight = weight;
     setCriteria(newCriteria);
+  };
+
+  const [isDragging, setIsDragging] = useState(false);
+  const [droppedFiles, setDroppedFiles] = useState<string[]>([]);
+
+  const readFilesAsText = useCallback((files: FileList) => {
+    const readers = Array.from(files).map(
+      file =>
+        new Promise<string>(resolve => {
+          const reader = new FileReader();
+          reader.onload = e => resolve((e.target?.result as string) ?? '');
+          reader.readAsText(file);
+        })
+    );
+    Promise.all(readers).then(texts => {
+      const valid = texts.filter(t => t.trim().length > 0);
+      setDroppedFiles(prev => [...prev, ...Array.from(files).map(f => f.name)]);
+      setCvBatch(prev => (prev.trim() ? prev + '\n---\n' : '') + valid.join('\n---\n'));
+    });
+  }, []);
+
+  const handleDrop = useCallback(
+    (e: React.DragEvent) => {
+      e.preventDefault();
+      setIsDragging(false);
+      if (e.dataTransfer.files.length) readFilesAsText(e.dataTransfer.files);
+    },
+    [readFilesAsText]
+  );
+
+  const handleFileInput = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files?.length) readFilesAsText(e.target.files);
+      e.target.value = '';
+    },
+    [readFilesAsText]
+  );
+
+  const removeDroppedFile = (name: string) => {
+    setDroppedFiles(prev => prev.filter(f => f !== name));
   };
 
   return (
@@ -291,7 +335,7 @@ export default function App() {
           )}
 
           {step === 'CVS' && (
-            <motion.div 
+            <motion.div
               key="cvs"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -300,17 +344,67 @@ export default function App() {
             >
               <div className="mb-10">
                 <h2 className="text-3xl font-bold text-slate-900 mb-3">Lote de Candidatos</h2>
-                <p className="text-slate-500 text-lg">Pega los CVs para triage. Usa <code className="bg-slate-200 px-1.5 py-0.5 rounded text-sm text-slate-700">---</code> para separar candidatos.</p>
+                <p className="text-slate-500 text-lg">
+                  Arrastra archivos .txt o pega los CVs. Usa <code className="bg-slate-200 px-1.5 py-0.5 rounded text-sm text-slate-700">---</code> para separar candidatos.
+                </p>
               </div>
 
-              <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-                <textarea 
-                  className="w-full h-96 p-6 rounded-xl border border-slate-200 bg-slate-50/50 focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 focus:outline-none transition-all resize-none text-sm font-mono text-slate-700 leading-relaxed"
+              <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-6">
+                {/* Drop zone */}
+                <div
+                  onDragOver={e => { e.preventDefault(); setIsDragging(true); }}
+                  onDragLeave={() => setIsDragging(false)}
+                  onDrop={handleDrop}
+                  className={`relative rounded-xl border-2 border-dashed transition-all duration-200 flex flex-col items-center justify-center gap-3 py-10 cursor-pointer ${
+                    isDragging
+                      ? 'border-indigo-500 bg-indigo-50 scale-[1.01]'
+                      : 'border-slate-300 bg-slate-50/50 hover:border-indigo-400 hover:bg-indigo-50/30'
+                  }`}
+                  onClick={() => document.getElementById('cv-file-input')?.click()}
+                >
+                  <input
+                    id="cv-file-input"
+                    type="file"
+                    multiple
+                    accept=".txt,.md,.csv,text/*"
+                    className="hidden"
+                    onChange={handleFileInput}
+                  />
+                  <div className={`w-14 h-14 rounded-2xl flex items-center justify-center transition-colors ${isDragging ? 'bg-indigo-600 text-white' : 'bg-white border border-slate-200 text-indigo-600'}`}>
+                    <Upload className="w-6 h-6" />
+                  </div>
+                  <div className="text-center">
+                    <p className="text-sm font-bold text-slate-700">
+                      {isDragging ? 'Suelta los archivos aquí' : 'Arrastra archivos o haz clic para seleccionar'}
+                    </p>
+                    <p className="text-xs text-slate-400 mt-1">Múltiples archivos .txt — cada archivo = un candidato</p>
+                  </div>
+                </div>
+
+                {/* Dropped file chips */}
+                {droppedFiles.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {droppedFiles.map(name => (
+                      <span key={name} className="inline-flex items-center gap-1.5 px-3 py-1 bg-indigo-50 text-indigo-700 text-xs font-semibold rounded-full border border-indigo-200">
+                        <FilePlus2 className="w-3 h-3" />
+                        {name}
+                        <button onClick={() => removeDroppedFile(name)} className="ml-0.5 hover:text-indigo-900">
+                          <X className="w-3 h-3" />
+                        </button>
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Textarea for manual paste */}
+                <textarea
+                  className="w-full h-72 p-6 rounded-xl border border-slate-200 bg-slate-50/50 focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 focus:outline-none transition-all resize-none text-sm font-mono text-slate-700 leading-relaxed"
                   placeholder="[CV 1: NOMBRE...]&#10;---&#10;[CV 2: NOMBRE...]"
                   value={cvBatch}
-                  onChange={(e) => setCvBatch(e.target.value)}
+                  onChange={e => setCvBatch(e.target.value)}
                 />
-                <div className="mt-8 p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-300 flex flex-col md:flex-row items-center justify-between gap-8">
+
+                <div className="p-8 bg-slate-50 rounded-2xl border border-dashed border-slate-300 flex flex-col md:flex-row items-center justify-between gap-8">
                   <div className="flex items-center gap-5">
                     <div className="p-4 bg-white text-indigo-600 rounded-2xl shadow-sm border border-slate-200"><ClipboardList className="w-6 h-6" /></div>
                     <div>
@@ -318,7 +412,7 @@ export default function App() {
                       <p className="text-xs text-slate-500 mt-1 font-medium italic">{cvBatch.split('---').filter(c => c.trim().length > 50).length} candidatos listos para análisis experto</p>
                     </div>
                   </div>
-                  <button 
+                  <button
                     onClick={handleCvSubmit}
                     disabled={!cvBatch.trim()}
                     className="w-full md:w-auto bg-indigo-600 text-white px-12 py-5 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-indigo-700 active:scale-[0.98] shadow-lg shadow-indigo-500/20 transition-all disabled:opacity-30 disabled:pointer-events-none group"
@@ -327,6 +421,37 @@ export default function App() {
                   </button>
                 </div>
               </div>
+            </motion.div>
+          )}
+
+          {step === 'DASHBOARD' && (
+            <motion.div
+              key="dashboard"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="w-full max-w-6xl mx-auto px-4 py-8"
+            >
+              <div className="mb-6">
+                <button
+                  onClick={() => setStep('RESULTS')}
+                  className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                >
+                  <ChevronRight size={14} className="rotate-180" />
+                  Volver a resultados
+                </button>
+              </div>
+              <CandidateDashboard
+                candidates={rankings}
+                position={jd.split('\n')[0].slice(0, 60) || 'Posición evaluada'}
+                onNewEvaluation={() => {
+                  setStep('JD');
+                  setJd('');
+                  setCriteria([]);
+                  setCvBatch('');
+                  setRankings([]);
+                  setExecutiveSummary(null);
+                }}
+              />
             </motion.div>
           )}
 
@@ -443,17 +568,26 @@ export default function App() {
                     <p className="text-[11px] text-slate-500 font-medium italic">Triage técnico consistente ahorrando ~28h de fatiga diagnóstica.</p>
                    </div>
                 </div>
-                <button 
-                  onClick={() => {
-                    setStep('JD');
-                    setRankings([]);
-                    setExecutiveSummary(null);
-                    setCriteria([]);
-                  }} 
-                  className="px-10 py-4 bg-white border border-slate-200 rounded-xl text-[10px] font-black text-slate-700 hover:bg-slate-50 hover:border-indigo-600 hover:text-indigo-600 active:scale-[0.98] transition-all uppercase tracking-[0.2em] shadow-sm"
-                >
-                  Nueva Evaluación de Puesto
-                </button>
+                <div className="flex items-center gap-4">
+                  <button
+                    onClick={() => setStep('DASHBOARD')}
+                    className="flex items-center gap-2 px-6 py-3 bg-indigo-600 text-white rounded-xl font-medium hover:bg-indigo-700 transition-colors"
+                  >
+                    <Users size={16} />
+                    Ver Dashboard
+                  </button>
+                  <button
+                    onClick={() => {
+                      setStep('JD');
+                      setRankings([]);
+                      setExecutiveSummary(null);
+                      setCriteria([]);
+                    }}
+                    className="px-10 py-4 bg-white border border-slate-200 rounded-xl text-[10px] font-black text-slate-700 hover:bg-slate-50 hover:border-indigo-600 hover:text-indigo-600 active:scale-[0.98] transition-all uppercase tracking-[0.2em] shadow-sm"
+                  >
+                    Nueva Evaluación de Puesto
+                  </button>
+                </div>
               </div>
             </motion.div>
           )}

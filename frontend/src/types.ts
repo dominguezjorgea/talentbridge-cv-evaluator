@@ -5,15 +5,29 @@ export interface Criterion {
   degradation_signs: string;
 }
 
+export type CandidateStatus = 'Pendiente' | 'En proceso' | 'Descartado' | 'Shortlisted';
+
+export interface ScoreBreakdown {
+  skills_match: number;
+  experience: number;
+  education: number;
+}
+
 export interface CandidateRanking {
   rank?: number;
   name: string;
+  email?: string;
   score: number;
-  recommendation: 'AVANZAR'|'CONSIDERAR'|'RECHAZAR';
+  recommendation: 'AVANZAR' | 'CONSIDERAR' | 'RECHAZAR';
   evidence: string[];
   strengths: string[];
   gaps: string[];
   red_flags: string[];
+  experience_years?: number;
+  skills?: string[];
+  score_breakdown?: ScoreBreakdown;
+  evaluated_at?: string;
+  status?: CandidateStatus;
 }
 
 export interface ExecutiveSummary {
@@ -32,4 +46,4 @@ export interface EvaluationResult {
   executive_summary: ExecutiveSummary;
 }
 
-export type AppStep = 'JD' | 'CRITERIA' | 'CVS' | 'RESULTS';
+export type AppStep = 'JD' | 'CRITERIA' | 'CVS' | 'RESULTS' | 'DASHBOARD';

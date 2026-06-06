@@ -14,12 +14,17 @@ interface Criterion {
 interface CandidateRanking {
   rank?: number;
   name: string;
+  email?: string;
   score: number;
   recommendation: 'AVANZAR' | 'CONSIDERAR' | 'RECHAZAR';
   evidence: string[];
   strengths: string[];
   gaps: string[];
   red_flags: string[];
+  experience_years?: number;
+  skills?: string[];
+  score_breakdown?: { skills_match: number; experience: number; education: number };
+  evaluated_at?: string;
 }
 
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash-lite';
@@ -128,6 +133,10 @@ REGLAS:
 - Cita evidencia REAL del CV para cada conclusión.
 - Identifica Red Flags (⚠️).
 - Recomendación: 'AVANZAR' (8.0+), 'CONSIDERAR' (6.0-7.9), 'RECHAZAR' (<6.0).
+- Extrae el email del candidato si aparece en el CV (si no hay, omítelo).
+- Estima los años de experiencia relevante como número entero.
+- Lista las skills técnicas principales como array (máximo 8).
+- Desglosa el score en 3 dimensiones de 0 a 10 cada una: skills_match, experience, education.
 `;
 
       const response = await ai.models.generateContent({
@@ -145,6 +154,18 @@ REGLAS:
               strengths: { type: Type.ARRAY, items: { type: Type.STRING } },
               gaps: { type: Type.ARRAY, items: { type: Type.STRING } },
               red_flags: { type: Type.ARRAY, items: { type: Type.STRING } },
+              email: { type: Type.STRING },
+              experience_years: { type: Type.NUMBER },
+              skills: { type: Type.ARRAY, items: { type: Type.STRING } },
+              score_breakdown: {
+                type: Type.OBJECT,
+                properties: {
+                  skills_match: { type: Type.NUMBER },
+                  experience: { type: Type.NUMBER },
+                  education: { type: Type.NUMBER },
+                },
+                required: ['skills_match', 'experience', 'education'],
+              },
             },
             required: ['name', 'score', 'recommendation', 'evidence', 'strengths', 'gaps', 'red_flags'],
           },
